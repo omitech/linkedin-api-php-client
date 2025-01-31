@@ -352,7 +352,7 @@ class Client
      */
     public static function responseToArray($response)
     {
-        if ($response->getHeaderLine('Content-Length') > 0 && ($contents = $response->getBody()->getContents())) {
+        if ($contents = $response->getBody()->getContents()) {
             return \GuzzleHttp\json_decode(
                 $contents,
                 true
