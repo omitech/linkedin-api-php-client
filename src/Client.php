@@ -621,7 +621,7 @@ class Client
                     'headers' => [
                         'Authorization'  => 'Bearer ' . $this->accessToken->getToken()
                     ],
-                    'body' => $resource
+                    $params
                 ]
             );
         } catch (RequestException $requestException) {
