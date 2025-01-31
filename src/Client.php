@@ -618,10 +618,14 @@ class Client
             (new GuzzleClient())->put(
                 $endpoint,
                 [
-                    'headers' => [
-                        'Authorization'  => 'Bearer ' . $this->accessToken->getToken()
-                    ],
-                    $params
+                    array_merge(
+                        [
+                            'headers' => [
+                                'Authorization'  => 'Bearer ' . $this->accessToken->getToken()
+                            ]
+                        ],
+                        $params
+                    )
                 ]
             );
         } catch (RequestException $requestException) {
