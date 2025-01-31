@@ -553,7 +553,7 @@ class Client
         } catch (RequestException $requestException) {
             throw Exception::fromRequestException($requestException);
         }
-        return self::responseToArray($response);
+        return ($method != Method::PUT) ? self::responseToArray($response) : [];
     }
 
     /**
