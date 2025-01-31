@@ -553,7 +553,7 @@ class Client
         } catch (RequestException $requestException) {
             throw Exception::fromRequestException($requestException);
         }
-        return ($method != Method::PUT) ? self::responseToArray($response) : [];
+        return self::responseToArray($response);
     }
 
     /**
@@ -608,7 +608,26 @@ class Client
      */
     public function put($endpoint, array $params = [])
     {
-        return $this->api($endpoint, $params, Method::PUT);
+        if (false === is_resource($params['body'])) {
+            throw new \InvalidArgumentException(
+                sprintf('Argument must be a valid resource type. %s given.', gettype($resource))
+            );
+        }
+
+        try {
+            (new GuzzleClient())->put(
+                $endpoint,
+                [
+                    'headers' => [
+                        'Authorization'  => 'Bearer ' . $this->accessToken->getToken()
+                    ],
+                    'body' => $resource
+                ]
+            );
+        } catch (RequestException $requestException) {
+            throw Exception::fromRequestException($requestException);
+        }
+
     }
 
     /**
